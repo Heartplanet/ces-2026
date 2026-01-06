@@ -169,4 +169,111 @@
                                 className="relative h-[500px] flex items-center justify-center bg-white rounded-[2rem] shadow-2xl border border-gray-100 p-8"
                                 initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
                             >
-                                <div className
+                                <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(#3B82F6 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
+                                
+                                <div className="relative w-48 h-full">
+                                    <FootprintVisual />
+                                    
+                                    {/* Sensors (Interactive) */}
+                                    <div className="absolute top-[25%] left-[25%]"><div className="sensor-pulse"></div></div>
+                                    <div className="absolute top-[30%] right-[30%]"><div className="sensor-pulse"></div></div>
+                                    <div className="absolute top-[50%] left-[30%]"><div className="sensor-pulse"></div></div>
+                                    <div className="absolute bottom-[20%] left-[40%]"><div className="sensor-pulse heel"></div></div>
+                                    
+                                    {/* Ankle Module */}
+                                    <motion.div 
+                                        className="absolute -right-4 top-1/3 bg-white p-3 rounded-xl shadow-xl border border-blue-100 flex items-center gap-2"
+                                        animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 3 }}
+                                    >
+                                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-ping"></div>
+                                        <div className="text-xs font-bold text-gray-600">
+                                            <span className="block text-blue-600">Module Active</span>
+                                            Data Syncing...
+                                        </div>
+                                    </motion.div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </section>
+
+                    {/* Tech Specs */}
+                    <section className="py-20 bg-white">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl font-bold mb-4">Innovation Inside the Fabric</h2>
+                                <p className="text-gray-500">Medical-grade technology woven into soft comfort.</p>
+                            </div>
+                            <div className="grid md:grid-cols-4 gap-6">
+                                {[
+                                    {title: "Textile Sensors", desc: "6 ultra-thin sensors integrated for comfort.", icon: "layers"},
+                                    {title: "IMU Tracking", desc: "Real-time detection of tilt & balance.", icon: "activity"},
+                                    {title: "100Hz Analysis", desc: "High-speed data transmission.", icon: "zap"},
+                                    {title: "Wireless Module", desc: "Compact, detachable, and lightweight.", icon: "wifi"}
+                                ].map((item, i) => (
+                                    <motion.div key={i} whileHover={{ y: -5 }} className="p-6 bg-gray-50 rounded-2xl border border-gray-100 hover:border-blue-200 transition-colors">
+                                        <div className="w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-blue-600 mb-4">
+                                            <Icon name={item.icon} size={20} />
+                                        </div>
+                                        <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                                        <p className="text-gray-600 text-sm">{item.desc}</p>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* App Section */}
+                    <section className="py-20 bg-cream">
+                        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                            {/* App Phone Mockup (SVG) */}
+                            <motion.div 
+                                className="relative mx-auto border-gray-800 bg-gray-800 border-[12px] rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl overflow-hidden"
+                                initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+                            >
+                                <AppScreenVisual />
+                            </motion.div>
+
+                            <div>
+                                <h2 className="text-3xl font-bold mb-8 text-gray-900">See What Your Feet Are Telling You</h2>
+                                <div className="space-y-6">
+                                    {[
+                                        {id: "01", title: "Pilates & Yoga", text: "Visual feedback for perfect posture.", color: "text-coral", bg: "bg-coral/10"},
+                                        {id: "02", title: "Rehabilitation", text: "Gait analysis to prevent falls.", color: "text-blue-600", bg: "bg-blue-100"},
+                                        {id: "03", title: "Sports Performance", text: "Optimize ground reaction force.", color: "text-green-600", bg: "bg-green-100"}
+                                    ].map((item, i) => (
+                                        <div key={i} className="flex gap-4 p-4 rounded-xl hover:bg-white hover:shadow-sm transition-all">
+                                            <div className={`w-12 h-12 rounded-full ${item.bg} flex items-center justify-center ${item.color} shrink-0 font-bold`}>
+                                                {item.id}
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-xl mb-1">{item.title}</h3>
+                                                <p className="text-gray-600">{item.text}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="bg-gray-900 text-white py-20 mt-auto text-center">
+                        <h2 className="text-3xl font-bold mb-4">See you in Las Vegas!</h2>
+                        <div className="inline-block bg-gray-800 px-6 py-3 rounded-xl mb-8 border border-gray-700">
+                            <p className="font-bold text-blue-400">Eureka Park • Booth #63300-14</p>
+                        </div>
+                        <br/>
+                        <a href="https://www.linkedin.com/company/heartplanet" target="_blank" className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 rounded-lg font-bold hover:bg-blue-500 transition-colors">
+                            <Icon name="linkedin" size={20} /> Connect on LinkedIn
+                        </a>
+                        <p className="mt-12 text-gray-500 text-sm">© 2026 HeartPlanet. Redefining Digital Wellness.</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
