@@ -60,18 +60,26 @@
 
         // --- [SVG 그래픽] 이미지 파일 대신 코드로 그림을 그립니다 ---
         
-        // 1. 발바닥 맵 (Footprint Visualization)
+        // 1. ★리뉴얼된 진짜 발바닥 모양 SVG★
         const FootprintVisual = () => (
             <svg viewBox="0 0 200 400" className="w-full h-full drop-shadow-2xl">
-                {/* 발바닥 외형 */}
-                <path d="M60,380 C30,370 10,340 10,290 C10,240 25,200 35,160 C40,140 30,120 25,100 C20,70 30,20 80,10 C130,5 170,40 175,90 C180,120 160,150 165,180 C175,220 190,260 185,300 C180,350 150,380 120,390 Z" 
-                      fill="white" stroke="#E5E7EB" strokeWidth="2" />
-                {/* 발가락 구분선 */}
-                <path d="M30,90 Q50,110 70,90 M75,85 Q95,105 115,85 M120,85 Q140,105 160,85" fill="none" stroke="#F3F4F6" strokeWidth="2"/>
+                <defs>
+                    <linearGradient id="footGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style={{stopColor:'white', stopOpacity:1}} />
+                        <stop offset="100%" style={{stopColor:'#F3F4F6', stopOpacity:1}} />
+                    </linearGradient>
+                </defs>
+                {/* 발바닥 외형 - 더 유기적이고 리얼한 라인 */}
+                <path d="M75,385 C45,380 25,350 20,310 C15,260 30,210 40,170 C45,150 35,130 30,110 C25,85 35,30 85,20 C135,10 175,50 180,100 C185,130 165,160 170,190 C180,230 195,270 190,310 C185,360 155,390 125,395 C105,398 90,390 75,385 Z" 
+                      fill="url(#footGradient)" stroke="#E5E7EB" strokeWidth="2" />
                 
-                {/* 내부 회로 라인 */}
-                <path d="M90,380 L90,300 L50,200 M90,300 L130,200 M90,150 L60,100 M90,150 L120,100" 
-                      fill="none" stroke="#3B82F6" strokeWidth="2" strokeOpacity="0.3" />
+                {/* 발가락 및 패드 구분선 (디테일 추가) */}
+                <path d="M40,110 Q60,130 85,110 M90,105 Q115,125 140,105 M145,105 Q165,120 180,100" fill="none" stroke="#E5E7EB" strokeWidth="1.5" opacity="0.6"/>
+                <path d="M40,170 Q100,200 170,190" fill="none" stroke="#E5E7EB" strokeWidth="1.5" opacity="0.4"/> {/* 중족골 라인 */}
+                
+                {/* 내부 회로 라인 (은은하게) */}
+                <path d="M100,380 L100,320 C100,320 60,250 60,200 M100,320 C100,320 140,250 140,200 M100,180 L70,120 M100,180 L130,120" 
+                      fill="none" stroke="#3B82F6" strokeWidth="2" strokeOpacity="0.2" strokeLinecap="round" />
             </svg>
         );
 
@@ -91,11 +99,12 @@
                         <span>Settings</span>
                     </div>
                     {/* 히트맵 시각화 */}
-                    <div className="relative w-40 h-64 my-4">
+                    <div className="relative w-44 h-64 my-4">
                         <FootprintVisual />
-                        {/* 히트맵 포인트 (압력) */}
-                        <div className="absolute top-[20%] left-[30%] w-12 h-12 bg-red-500 rounded-full blur-xl opacity-60"></div>
-                        <div className="absolute bottom-[25%] right-[30%] w-16 h-16 bg-blue-500 rounded-full blur-xl opacity-60"></div>
+                        {/* 히트맵 포인트 (압력) - 위치 조정됨 */}
+                        <div className="absolute top-[22%] left-[32%] w-14 h-14 bg-red-500 rounded-full blur-xl opacity-60"></div>
+                        <div className="absolute bottom-[20%] right-[35%] w-16 h-16 bg-blue-500 rounded-full blur-xl opacity-50"></div>
+                        <div className="absolute top-[45%] left-[40%] w-10 h-10 bg-yellow-500 rounded-full blur-xl opacity-40"></div>
                     </div>
                     {/* 데이터 카드 */}
                     <div className="w-full bg-gray-50 p-3 rounded-xl mb-2 flex justify-between items-center">
@@ -119,6 +128,9 @@
         const App = () => {
             useEffect(() => { if (window.lucide) window.lucide.createIcons(); }, []);
 
+            // ★ 링크드인 개인 프로필 주소 (새 주소 적용) ★
+            const linkedInUrl = "https://www.linkedin.com/in/yoanna-lee-a74aa8392";
+
             return (
                 <div className="min-h-screen flex flex-col overflow-x-hidden">
                     {/* Header */}
@@ -128,7 +140,7 @@
                                 <span className="text-2xl font-extrabold text-blue-600">HeartPlanet</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <a href="https://www.linkedin.com/company/heartplanet" target="_blank" className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100">
+                                <a href={linkedInUrl} target="_blank" className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors">
                                     <Icon name="linkedin" size={20} />
                                 </a>
                                 <span className="hidden md:block px-3 py-1 bg-gray-900 text-white text-xs font-bold rounded-full shadow-md">
@@ -164,21 +176,25 @@
                                 </div>
                             </motion.div>
 
-                            {/* Main Visual (SVG Footprint) */}
+                            {/* Main Visual (리뉴얼된 SVG 발바닥) */}
                             <motion.div 
                                 className="relative h-[500px] flex items-center justify-center bg-white rounded-[2rem] shadow-2xl border border-gray-100 p-8"
                                 initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
                             >
                                 <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(#3B82F6 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
                                 
-                                <div className="relative w-48 h-full">
+                                <div className="relative w-52 h-full">
                                     <FootprintVisual />
                                     
-                                    {/* Sensors (Interactive) */}
-                                    <div className="absolute top-[25%] left-[25%]"><div className="sensor-pulse"></div></div>
-                                    <div className="absolute top-[30%] right-[30%]"><div className="sensor-pulse"></div></div>
-                                    <div className="absolute top-[50%] left-[30%]"><div className="sensor-pulse"></div></div>
-                                    <div className="absolute bottom-[20%] left-[40%]"><div className="sensor-pulse heel"></div></div>
+                                    {/* Sensors (Interactive) - 새 발 모양에 맞춰 위치 재조정 */}
+                                    {/* 발가락/앞꿈치 */}
+                                    <div className="absolute top-[28%] left-[30%]"><div className="sensor-pulse"></div></div>
+                                    <div className="absolute top-[25%] right-[35%]"><div className="sensor-pulse"></div></div>
+                                    {/* 아치/중족골 */}
+                                    <div className="absolute top-[50%] left-[35%]"><div className="sensor-pulse"></div></div>
+                                    <div className="absolute top-[48%] right-[30%]"><div className="sensor-pulse"></div></div>
+                                    {/* 뒤꿈치 (Heel) */}
+                                    <div className="absolute bottom-[18%] left-[42%]"><div className="sensor-pulse heel"></div></div>
                                     
                                     {/* Ankle Module */}
                                     <motion.div 
@@ -263,7 +279,7 @@
                             <p className="font-bold text-blue-400">Eureka Park • Booth #63300-14</p>
                         </div>
                         <br/>
-                        <a href="https://www.linkedin.com/company/heartplanet" target="_blank" className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 rounded-lg font-bold hover:bg-blue-500 transition-colors">
+                        <a href={linkedInUrl} target="_blank" className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 rounded-lg font-bold hover:bg-blue-500 transition-colors">
                             <Icon name="linkedin" size={20} /> Connect on LinkedIn
                         </a>
                         <p className="mt-12 text-gray-500 text-sm">© 2026 HeartPlanet. Redefining Digital Wellness.</p>
